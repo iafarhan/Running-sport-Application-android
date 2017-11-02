@@ -4,6 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+
+
     tools:context="views.StartActivity">
+
+    <FrameLayout
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:background="#000"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"></FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
