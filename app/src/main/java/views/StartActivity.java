@@ -1,15 +1,14 @@
 package views;
-
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
-
 import com.asocs.sprintmaster.R;
 
+import adapters.viewpagerAdapter;
 import fragments.NavigationFragment;
-
 public class StartActivity extends AppCompatActivity {
 
     @Override
@@ -24,5 +23,8 @@ public class StartActivity extends AppCompatActivity {
         FragmentTransaction transaction= getFragmentManager().beginTransaction();
         transaction.add(R.id.navigation_view,navigationFragment);
         transaction.commit();
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewpagerAdapter adapter = new viewpagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
     }
 }
