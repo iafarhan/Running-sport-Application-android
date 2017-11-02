@@ -10,11 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="views.StartActivity">
+
+        </activity>
+        
+        <activity android:name="views.SprintMonitoringActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER"></category>
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>zz
+        </activity>
     </application>
 
 </manifest>
