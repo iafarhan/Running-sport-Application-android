@@ -20,9 +20,6 @@ public class StartActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
                  WindowManager.LayoutParams. FLAG_FULLSCREEN );
         getSupportActionBar().hide();
-        NavigationFragment navigationFragment=new NavigationFragment();
-        FragmentTransaction transaction= getFragmentManager().beginTransaction();
-        transaction.add(R.id.navigation_view,navigationFragment);
-        transaction.commit();
+
     }
 }
