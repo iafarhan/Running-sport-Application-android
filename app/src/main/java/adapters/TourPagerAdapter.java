@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.asocs.sprintmaster.R;
 
@@ -17,6 +18,7 @@ import com.asocs.sprintmaster.R;
 public class TourPagerAdapter extends PagerAdapter {
 
     int[] mResources = {R.drawable.tour_sprint,R.drawable.tour_workout,R.drawable.tour_diet};
+    String[] mDescription={"sprint monitoring","workout plans","diet plans"};
 //
     Context mContext;
     LayoutInflater mLayoutInflater;
@@ -43,7 +45,8 @@ public class TourPagerAdapter extends PagerAdapter {
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
         imageView.setImageResource(mResources[position]);
-
+        TextView textView=(TextView) itemView.findViewById(R.id.description_view);
+        textView.setText(mDescription[position]);
         container.addView(itemView);
 
         return itemView;
