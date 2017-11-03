@@ -17,7 +17,7 @@ import com.asocs.sprintmaster.R;
 public class TourPagerAdapter extends PagerAdapter {
 
     int[] mResources = {R.drawable.tour_sprint,R.drawable.tour_workout,R.drawable.tour_diet};
-
+//
     Context mContext;
     LayoutInflater mLayoutInflater;
 
