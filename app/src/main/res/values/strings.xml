@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SprintMaster</string>
+    <string name="continue_str">continue</string>
 </resources>
