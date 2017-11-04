@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "673552031507",
+    "project_id": "noted-tide-185015"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673552031507:android:5cf6a1c951561b8f",
+        "android_client_info": {
+          "package_name": "com.asocs.sprintmaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673552031507-29sr9890r6u06mfgieassnem31a96iko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.asocs.sprintmaster",
+            "certificate_hash": "73a7727cbcf6ddb939a4cd38a1aba406a0032b2d"
+          }
+        },
+        {
+          "client_id": "673552031507-jkleto5jp5kpgqrr3u4gheer0dhq71bf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv9xT984DO3CCQy5JAZNPmVmKUW7fSPYw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
