@@ -56,5 +56,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         android:textColor="#fff"
+        android:onClick="startTourClicked"
         android:background="@drawable/button_style"/>
 </android.support.constraint.ConstraintLayout>
