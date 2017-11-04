@@ -1,14 +1,18 @@
 package views;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
+
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import com.asocs.sprintmaster.R;
 
-import fragments.NavigationFragment;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class StartActivity extends AppCompatActivity {
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
