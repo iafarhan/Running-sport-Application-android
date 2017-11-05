@@ -101,11 +101,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             GoogleSignInAccount account = result.getSignInAccount();
             String n = account.getDisplayName();
             String e = account.getEmail();
-            String image_url = account.getPhotoUrl().toString();
+
             name.setText(n);
             email.setText(e);
-            Glide.with(this).load(image_url).into(profPic);
+            try{
+                String image_url = account.getPhotoUrl().toString();
+
+            Glide.with(this).load(image_url).into(profPic);}
+            catch (Exception xe){
+                profPic.setImageResource(R.drawable.user_default);
+
+            }
             updateUi(true);
+        }
+        else
+        {
+            this.finish();
         }
     }
 
