@@ -104,18 +104,16 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             name.setText(n);
             email.setText(e);
-            try{
+            try {
                 String image_url = account.getPhotoUrl().toString();
 
-            Glide.with(this).load(image_url).into(profPic);}
-            catch (Exception xe){
+                Glide.with(this).load(image_url).into(profPic);
+            } catch (Exception xe) {
                 profPic.setImageResource(R.drawable.user_default);
 
             }
             updateUi(true);
-        }
-        else
-        {
+        } else {
             this.finish();
         }
     }
