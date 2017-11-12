@@ -30,117 +30,33 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
-public class SignInActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class SignInActivity extends AppCompatActivity {
 
 
-    LinearLayout profSelection;
-    Button signOut;
-    SignInButton signIn;
     TextView name, email;
     ImageView profPic;
-    GoogleApiClient googleApiClient;
-    static final int REQ_CODE = 9001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        profSelection = (LinearLayout) findViewById(R.id.Prof_Selection);
-        signIn = (SignInButton) findViewById(R.id.login_btn);
-        signOut = (Button) findViewById(R.id.logout_btn);
+
+
         name = (TextView) findViewById(R.id.user_name);
         email = (TextView) findViewById(R.id.email_adress);
         profPic = (ImageView) findViewById(R.id.profile_pic);
-        signIn.setOnClickListener(this);
-        signOut.setOnClickListener(this);
-        profSelection.setVisibility(View.GONE);
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
-    }
+        name.setText(getIntent().getStringExtra("NAME"));
+        email.setText(getIntent().getStringExtra("EMAIL"));
 
-    @Override
-    public void onClick(View v) {
+        String imageUrl = getIntent().getStringExtra("IMAGE_URL");
+        if (!imageUrl .equals("")) {
 
-        switch (v.getId()) {
-
-            case R.id.login_btn:
-
-                signIn();
-                break;
-            case R.id.logout_btn:
-                signOut();
-                break;
-        }
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+            Glide.with(this).load(getIntent().getStringExtra("IMAGE_URL")).into(profPic);
+        } else
+            profPic.setImageResource(R.drawable.user_default);
     }
 
 
-    private void signIn() {
-
-        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(intent, REQ_CODE);
-    }
-
-    private void signOut() {
-        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(@NonNull Status status) {
-                updateUi(false);
-            }
-        });
-    }
-
-    private void handleResult(GoogleSignInResult result) {
-        if (result.isSuccess()) {
-
-            GoogleSignInAccount account = result.getSignInAccount();
-            String n = account.getDisplayName();
-            String e = account.getEmail();
-
-            name.setText(n);
-            email.setText(e);
-            try {
-                String image_url = account.getPhotoUrl().toString();
-
-                Glide.with(this).load(image_url).into(profPic);
-            } catch (Exception xe) {
-                profPic.setImageResource(R.drawable.user_default);
-
-            }
-            updateUi(true);
-        } else {
-            this.finish();
-        }
-    }
-
-    private void updateUi(boolean logIn) {
-
-        if (logIn) {
-
-            profSelection.setVisibility(View.VISIBLE);
-            signIn.setVisibility(View.GONE);
-        } else {
-
-            profSelection.setVisibility(View.GONE);
-            signIn.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQ_CODE) {
-
-            GoogleSignInResult res = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleResult(res);
-        }
-    }
 }
 

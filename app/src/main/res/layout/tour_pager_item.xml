@@ -2,17 +2,20 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal">
 
 
         <ImageView
             android:layout_width="match_parent"
+            android:layout_margin="3dp"
+
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:adjustViewBounds="true"
             />
     <TextView
+        android:layout_marginTop="3dp"
         android:id="@+id/description_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

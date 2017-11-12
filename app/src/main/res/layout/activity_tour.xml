@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.6"
+        android:layout_weight="0.5"
      >
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
 
@@ -21,21 +21,26 @@
         android:layout_height="match_parent"
    ></android.support.v4.view.ViewPager>
   </LinearLayout>
-    <RelativeLayout
+    <LinearLayout
+
         android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.5"
         >
-        <Button
+
+        <com.google.android.gms.common.SignInButton
+            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#007aff"
+            android:background="@drawable/button_style"
             android:textColor="#fff"
-            android:text="@string/continue_str"
-            />
+            android:text="@string/sign_in"
+            android:id="@+id/sign_in"
+        ></com.google.android.gms.common.SignInButton>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

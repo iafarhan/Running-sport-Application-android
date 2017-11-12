@@ -1,0 +1,8 @@
+TODO: GoogleAPiClient
+This is the entry point for google play service integration
+
+Some of these methods require that GoogleApiClient be connected, some will queue up calls before
+GoogleApiClient is connected;
+
+check the specific API documentation to determine whether you need to be connected.
+

@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:gravity="center_horizontal"
+    android:gravity="center"
+
     android:layout_height="match_parent"
     android:layout_margin="2dp"
     android:layout_weight="1"
 
     android:background="@drawable/shadow">
 <ImageView
-    android:layout_width="60dp"
-    android:layout_height="60dp"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_weight="1"
     android:src="@drawable/img_diet"/>
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
         android:src="@drawable/img_running"/>
-
-    <View android:layout_width="100dp"
-        android:layout_height="100dp"
-
-        android:background="@drawable/circle"/>
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:src="@drawable/img_home"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
         android:src="@drawable/img_workout"/>
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
         android:src="@drawable/img_settings"/>
 
 </LinearLayout>
