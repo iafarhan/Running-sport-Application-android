@@ -4,10 +4,12 @@ package views;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -273,6 +275,11 @@ layoutLocation=(LinearLayout)findViewById(R.id.layout_location);
         layoutLocation.setVisibility(View.GONE);
 
 
+    }
+
+    public void musicBtnClicked(View view) {
+        Intent intent = new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
+        startActivity(intent);
     }
 
     // Define a DialogFragment that displays the error dialog
