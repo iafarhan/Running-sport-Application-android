@@ -13,6 +13,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.asocs.sprintmaster.R;
@@ -42,7 +44,7 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 @RuntimePermissions
 
 public class MapsActivity extends AppCompatActivity {
-
+    private LinearLayout layoutLocation,layoutStats;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
@@ -63,6 +65,8 @@ public class MapsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+layoutLocation=(LinearLayout)findViewById(R.id.layout_location);
+        layoutStats=(LinearLayout)findViewById(R.id.layout_stats);
 
         if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
             // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
@@ -254,6 +258,21 @@ public class MapsActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putParcelable(KEY_LOCATION, mCurrentLocation);
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void locationBtnClicked(View view) {
+
+    layoutStats.setVisibility(View.GONE);
+        layoutLocation.setVisibility(View.VISIBLE);
+
+    }
+
+    public void statsBtnClicked(View view) {
+        layoutStats.setVisibility(View.VISIBLE);
+
+        layoutLocation.setVisibility(View.GONE);
+
+
     }
 
     // Define a DialogFragment that displays the error dialog
