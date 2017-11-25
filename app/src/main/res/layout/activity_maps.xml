@@ -14,7 +14,8 @@
     android:layout_height="match_parent">
     <fragment
         android:id="@+id/map_Fragment"
-        android:name="com.google.android.gms.maps.MapFragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
@@ -121,4 +122,5 @@
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
+
 </LinearLayout>

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SprintMaster.iml" filepath="$PROJECT_DIR$/SprintMaster.iml" />
       <module fileurl="file://C:\Users\robo\Desktop\smd\SprintMaster.iml" filepath="C:\Users\robo\Desktop\smd\SprintMaster.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/smd.iml" filepath="$PROJECT_DIR$/smd.iml" />
+      <module fileurl="file://C:\Users\ASOCS\AndroidStudioProjects\SprintMaster\smd.iml" filepath="C:\Users\ASOCS\AndroidStudioProjects\SprintMaster\smd.iml" />
     </modules>
   </component>
 </project>
