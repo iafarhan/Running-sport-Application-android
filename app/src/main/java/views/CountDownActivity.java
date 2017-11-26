@@ -12,7 +12,9 @@ import java.util.TimerTask;
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
@@ -22,11 +24,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.PageTransformer;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.AccordionTransformer;
 import com.ToxicBakery.viewpager.transforms.BackgroundToForegroundTransformer;
@@ -45,47 +50,23 @@ import com.ToxicBakery.viewpager.transforms.TabletTransformer;
 import com.ToxicBakery.viewpager.transforms.ZoomInTransformer;
 import com.ToxicBakery.viewpager.transforms.ZoomOutSlideTransformer;
 
-public class CountDownActivity extends FragmentActivity implements OnNavigationListener {
-    int currentPage = 0;
-    Timer timer;
+import io.saeid.fabloading.LoadingView;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class CountDownActivity extends AppCompatActivity {
     TextToSpeech tts;
-     long DELAY_MS = 500;//delay in milliseconds before task is to be executed
-    long PERIOD_MS = 3000;
-    private static final String KEY_SELECTED_PAGE = "KEY_SELECTED_PAGE";
-    private static final String KEY_SELECTED_CLASS = "KEY_SELECTED_CLASS";
-    private static final ArrayList<TransformerItem> TRANSFORM_CLASSES;
-
-    static {
-        TRANSFORM_CLASSES = new ArrayList<>();
-        TRANSFORM_CLASSES.add(new TransformerItem(DefaultTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(AccordionTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(BackgroundToForegroundTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(CubeInTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(CubeOutTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(DepthPageTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(FlipHorizontalTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(FlipVerticalTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(ForegroundToBackgroundTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(RotateDownTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(RotateUpTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(ScaleInOutTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(StackTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(TabletTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(ZoomInTransformer.class));
-        TRANSFORM_CLASSES.add(new TransformerItem(ZoomOutSlideTransformer.class));
-
+LoadingView mLoadingView;
+TextView textView;
+LinearLayout ll;
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-   Handler handler;
-   Runnable runnable;
-    private int mSelectedItem;
-    private ViewPager mPager;
-    private PageAdapter mAdapter;
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -94,190 +75,57 @@ public class CountDownActivity extends FragmentActivity implements OnNavigationL
                 }
             }
         });
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        int selectedPage = 0;
-        if (savedInstanceState != null) {
-            mSelectedItem = savedInstanceState.getInt(KEY_SELECTED_CLASS);
-            selectedPage = savedInstanceState.getInt(KEY_SELECTED_PAGE);
-        }
-
-        final ArrayAdapter<TransformerItem> actionBarAdapter = new ArrayAdapter<TransformerItem>(
-                getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, TRANSFORM_CLASSES);
 
         setContentView(R.layout.activity_count_down);
+ll=(LinearLayout)findViewById(R.id.ll);
+        mLoadingView = (LoadingView) findViewById(R.id.loading_view);
+        mLoadingView.addAnimation(Color.RED,R.drawable.marks,LoadingView.FROM_LEFT);
+        mLoadingView.addAnimation(Color.RED,R.drawable.set,LoadingView.FROM_BOTTOM);
+        mLoadingView.addAnimation(Color.WHITE,R.drawable.go,LoadingView.FROM_RIGHT);
+        mLoadingView.addAnimation(Color.RED,R.drawable.marks,LoadingView.FROM_LEFT);
 
-        mAdapter = new PageAdapter(getSupportFragmentManager());
+        textView=(TextView)findViewById(R.id.textView);
 
-        mPager = (ViewPager) findViewById(R.id.container);
-        mPager.setAdapter(mAdapter);
-        mPager.setCurrentItem(selectedPage);
-        handler = new Handler();
-         runnable = new Runnable() {
-            public void run() {
+        //also you can add listener for getting callback (optional)
+        mLoadingView.addListener(new LoadingView.LoadingListener() {
+            @Override public void onAnimationStart(int currentItemPosition) {
+if(currentItemPosition==1){
+                    textView.setText("ON YOUR MARKS");}
+                if(currentItemPosition==2){
+                    textView.setText("Set");
+                    ll.setBackgroundColor(Color.parseColor("#802392"));
+
+}
+                if(currentItemPosition==3){
+                    textView.setText("Go");
 
 
-                if (currentPage == 0) {
-                    tts.speak("ON YOUR MARK", TextToSpeech.QUEUE_FLUSH, null);
-                    mPager.setCurrentItem(currentPage, true);
-                    currentPage++;
+                    ll.setBackgroundColor(Color.parseColor("#F58F29"));
 
-                } else if (currentPage == 1) {
-                    tts.speak("GET SET", TextToSpeech.QUEUE_FLUSH, null);
-                    mPager.setCurrentItem(currentPage, true);
-                    currentPage++;
-                } else if (currentPage == 2) {
-                    mPager.setCurrentItem(currentPage, true);
-
-                    tts.speak("GO", TextToSpeech.QUEUE_FLUSH, null);
-                    currentPage++;
 
                 }
-                else if(currentPage==3){
+
+            }
+
+            @Override public void onAnimationRepeat(int nextItemPosition) {
+            }
+
+            @Override public void onAnimationEnd(int nextItemPosition) {
+       //         finish();
+            }
+        });
+
+        mLoadingView.startAnimation();
 
 
-              //    currentPage++;
-                    Intent i=new Intent(CountDownActivity.this, MapsActivity.class);
-                    startActivity(i);
-finish();
+
+
 /*
-handler.removeMessages(0);
-                    handler.removeCallbacks(runnable);
+        Intent i=new Intent(CountDownActivity.this,MapsActivity.class);
+        startActivity(i);
 */
 
-                }
-
-            }
-        };
-
-        timer = new Timer(); // This will create a new Thread
-        timer.schedule(new TimerTask() { // task to be scheduled
-
-
-            @Override
-            public void run() {
-                handler.post(runnable);
-            }
-        }, DELAY_MS, PERIOD_MS);
-
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        handler.removeCallbacks(null);
-        handler.removeMessages(0);
-        timer.cancel();
-        timer = null;
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    @Override
-    public void onPause() {
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
-        }
-        super.onPause();
-    }
-    @Override
-    public boolean onNavigationItemSelected(int position, long itemId) {
-        mSelectedItem = position;
-        try {
-            mPager.setPageTransformer(true, TRANSFORM_CLASSES.get(position).clazz.newInstance());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return true;
-    }
-
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(KEY_SELECTED_CLASS, mSelectedItem);
-        outState.putInt(KEY_SELECTED_PAGE, mPager.getCurrentItem());
-    }
-
-    public static class PlaceholderFragment extends Fragment {
-
-        private static final String EXTRA_POSITION = "EXTRA_POSITION";
-        private static final int[] COLORS = new int[]{0xFF33B5E5, 0xFFAA66CC, 0xFF99CC00, 0xFFFFBB33, 0xFFFF4444};
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            final int position = getArguments().getInt(EXTRA_POSITION);
-            final TextView textViewPosition = (TextView) inflater.inflate(R.layout.fragment_main, container, false);
-            if (position == 1) {
-                textViewPosition.setText("On your MARK!");
-
-
-            }
-            if (position == 2) {
-                textViewPosition.setText("SET");
-
-
-            }
-            if (position == 3) {
-                textViewPosition.setText("GO");
-
-
-            }
-
-            textViewPosition.setBackgroundColor(COLORS[position - 1]);
-
-            return textViewPosition;
-        }
-
-    }
-
-    private static final class PageAdapter extends FragmentStatePagerAdapter {
-
-        public PageAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            final Bundle bundle = new Bundle();
-            bundle.putInt(PlaceholderFragment.EXTRA_POSITION, position + 1);
-
-
-            final PlaceholderFragment fragment = new PlaceholderFragment();
-            fragment.setArguments(bundle);
-
-            return fragment;
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-    }
-
-    private static final class TransformerItem {
-
-        final String title;
-        final Class<? extends PageTransformer> clazz;
-
-        public TransformerItem(Class<? extends PageTransformer> clazz) {
-            this.clazz = clazz;
-            title = clazz.getSimpleName();
-        }
-
-        @Override
-        public String toString() {
-            return title;
-        }
-
-    }
 
 }

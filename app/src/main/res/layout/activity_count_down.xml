@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="views.CountDownActivity">
+    android:orientation="vertical"
+    android:id="@+id/ll"
+    android:background="#364652"
+android:gravity="center"    tools:context="views.CountDownActivity">
 
 
-    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="MainActivity" />
+    <io.saeid.fabloading.LoadingView
+        android:id="@+id/loading_view"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:scaleX="1.5"
+    android:scaleY="1.5"
+    app:mfl_onclickLoading="true"
+android:visibility="gone"
+    app:mfl_duration="2000"
+    app:mfl_repeat="4"
+    />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="DONTKNOW"
+        android:textSize="48sp" />
+
+</LinearLayout>

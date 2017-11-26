@@ -38,7 +38,9 @@
         <activity android:name="views.SprintMonitoringActivity" />
         <activity android:name="views.TourActivity" />
         <activity android:name="views.SignInActivity" />
-        <activity android:name="views.MapsActivity"></activity>
+        <activity android:name="views.MapsActivity">
+
+        </activity>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -54,11 +56,12 @@
         <activity android:name="views.HomeActivity">
 
         </activity>
-        <activity android:name="views.CountDownActivity">     <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name="views.CountDownActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package views;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,14 +13,20 @@ import com.asocs.sprintmaster.R;
 import com.skyfishjy.library.RippleBackground;
 
 import fragments.NavigationFragment;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import views.MapsActivity;
 
 public class HomeActivity extends AppCompatActivity {
 LinearLayout linear_layout;
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_home);
                 NavigationFragment navigationFragment=new NavigationFragment();

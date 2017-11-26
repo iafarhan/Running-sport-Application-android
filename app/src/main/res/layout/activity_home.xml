@@ -43,9 +43,9 @@ android:layout_width="fill_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:rb_color="#BDBDBD"
             app:rb_duration="3000"
-            app:rb_radius="18dp"
+            app:rb_radius="28dp"
             app:rb_rippleAmount="4"
-            app:rb_scale="6">
+            app:rb_scale="18">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
