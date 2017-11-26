@@ -42,12 +42,9 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-/*
-
         name = (TextView) findViewById(R.id.user_name);
         email = (TextView) findViewById(R.id.email_adress);
         profPic = (ImageView) findViewById(R.id.profile_pic);
-*/
         name.setText(getIntent().getStringExtra("NAME"));
         email.setText(getIntent().getStringExtra("EMAIL"));
 

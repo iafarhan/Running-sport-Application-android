@@ -2,6 +2,9 @@
     <string name="app_name">SprintMaster</string>
     <string name="continue_str">continue</string>
     <string name="sign_in">sign in</string>
-    <string name="btn_stop_location_updates">stop location updates</string>
-    <string name="btn_start_location_updates">start location updates</string>
+    <string name="total_miles">Total Mi</string>
+    <string name="tab_1">home</string>
+    <string name="tab_2">home</string>
+    <string name="tab_3">stats</string>
+
 </resources>
