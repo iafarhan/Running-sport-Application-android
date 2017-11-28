@@ -17,7 +17,7 @@ import com.asocs.sprintmaster.R;
 
 public class TourPagerAdapter extends PagerAdapter {
 
-    int[] mResources = {R.drawable.ronaldo1,R.drawable.ronaldo2,R.drawable.hazard};
+    int[] mResources = {R.drawable.bale1,R.drawable.ronaldo1,R.drawable.ronaldo2};
     String[] mDescription={"sprint monitoring","workout plans","diet plans"};
 //
     Context mContext;

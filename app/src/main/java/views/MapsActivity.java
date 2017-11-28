@@ -321,20 +321,24 @@ pause=(ImageButton)findViewById(R.id.pause);
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
         if (mCurrentLocation != null) {
-            double distance = GetDistanceFromLatLonInKm(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), location.getLatitude(), location.getLongitude());
+        //    double distance = GetDistanceFromLatLonInKm(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), location.getLatitude(), location.getLongitude());
             //     Toast.makeText(this, "DISTANCE IS "+distance, Toast.LENGTH_LONG).show();
             //String newDist= new DecimalFormat("#.##").format(distance);
 
 
             String prevDist = distance_meters.getText().toString();
-            double f1 = Double.valueOf(distance) + Float.valueOf(prevDist);
-            distance_meters.setText(String.valueOf(f1));
+          //  double f1 = Double.valueOf(distance) + Float.valueOf(prevDist);
+          //  distance_meters.setText(String.valueOf(f1));
             float dist = mCurrentLocation.distanceTo(location);
             double val = dist + Double.valueOf(max_speed.getText().toString());
-            max_speed.setText(String.valueOf(val));
+            distance_meters.setText(String.valueOf(val));
         }
         mCurrentLocation = location;
         current_speed.setText(String.valueOf(mCurrentLocation.getSpeed()));
+        if(mCurrentLocation.getSpeed()>=Float.valueOf(max_speed.getText().toString())){
+            max_speed.setText(String.valueOf(mCurrentLocation.getSpeed()));
+
+        }
 
         //  Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
         LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
@@ -345,7 +349,7 @@ pause=(ImageButton)findViewById(R.id.pause);
 
     }
 
-    public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
+    /*public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
         final int R = 6371;
         // Radius of the earth in km
         double dLat = deg2rad(lat2 - lat1);
@@ -356,7 +360,7 @@ pause=(ImageButton)findViewById(R.id.pause);
         double d = R * c;
         // Distance in km
         return d * 1000;
-    }
+    }*/
 
     private double deg2rad(double deg) {
         return deg * (Math.PI / 180);

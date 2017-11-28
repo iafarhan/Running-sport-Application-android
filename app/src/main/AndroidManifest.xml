@@ -37,14 +37,13 @@
         <activity android:name="views.StartActivity" />
         <activity android:name="views.SprintMonitoringActivity" />
         <activity android:name="views.TourActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="views.SignInActivity" />
-        <activity android:name="views.MapsActivity"></activity>
+        <activity android:name="views.MapsActivity">
+
+
+        </activity>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -58,6 +57,11 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name="views.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name="views.CountDownActivity"></activity>

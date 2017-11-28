@@ -20,10 +20,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
-        this.getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
-                 WindowManager.LayoutParams. FLAG_FULLSCREEN );
-  }
+}
 
     public void startTourClicked(View view) {
 

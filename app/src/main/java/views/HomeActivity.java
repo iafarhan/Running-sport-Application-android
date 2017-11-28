@@ -4,9 +4,12 @@ import android.app.FragmentTransaction;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,27 +51,50 @@ ContentResolver resolver;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        resolver= getContentResolver();
+        resolver = getContentResolver();
         //CreateBio();
-    total_miles=(TextView) findViewById(R.id.textView6);
-    MinSec=(TextView) findViewById(R.id.textView7);
-    total_run=(TextView) findViewById(R.id.textView8);
-    max_speed=(TextView) findViewById(R.id.textView9);
-       CreateBio();
-   //     update(0);
-        NavigationFragment navigationFragment=new NavigationFragment();
-        FragmentTransaction transaction= getFragmentManager().beginTransaction();
-        transaction.add(R.id.navigation_view,navigationFragment);
+        total_miles = (TextView) findViewById(R.id.textView6);
+        MinSec = (TextView) findViewById(R.id.textView7);
+        total_run = (TextView) findViewById(R.id.textView8);
+        max_speed = (TextView) findViewById(R.id.textView9);
+    //    CreateBio();
+        //     update(0);
+        NavigationFragment navigationFragment = new NavigationFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.navigation_view, navigationFragment);
         transaction.commit();
 
-        final RippleBackground rippleBackground=(RippleBackground)findViewById(R.id.content);
-                        rippleBackground.startRippleAnimation();
+        final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.content);
+        rippleBackground.startRippleAnimation();
 
 
+  final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
+    }
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
 
 
     }
+
+
     public void startBtnClicked(View view){
 
 

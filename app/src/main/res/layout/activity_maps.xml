@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.7"
+        android:scaleType="fitXY"
         android:src="@drawable/ronaldo" />
 
     <LinearLayout
@@ -145,7 +146,7 @@
                     android:editable="false"
                     android:ems="10"
                     android:gravity="center"
-                    android:text="--"
+                    android:text="0"
                     android:textColor="#fff"
                     android:textSize="32sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/max_speed"
