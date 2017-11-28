@@ -26,14 +26,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.8"
             android:background="#494949"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/pause_layout"
-                android:gravity="center_vertical">
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/pause"
@@ -42,12 +37,11 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="15dp"
-
                     android:background="#494949"
                     android:foregroundGravity="center_vertical"
                     android:src="@drawable/pause" />
 
-            </RelativeLayout>
+
 
             <LinearLayout
 
@@ -63,6 +57,7 @@
                     android:id="@+id/stopBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:onClick="stopBtnClicked"
 
                     android:layout_weight="0.5"
                     android:background="#494949"

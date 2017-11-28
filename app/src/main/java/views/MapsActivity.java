@@ -60,10 +60,11 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 
 public class MapsActivity extends AppCompatActivity {
     int minutes = 0;
+    int totalSecs = 0;
     String min = "00";
-    RelativeLayout pause_layout;
+    boolean measureLocation = true;
     LinearLayout play_layout;
-TimerTask timerTask;
+    TimerTask timerTask;
     Timer times;
     int seconds = 0;
     private LinearLayout layoutLocation, layoutStats;
@@ -87,10 +88,10 @@ TimerTask timerTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        play_layout = (LinearLayout) findViewById(R.id.play_layout);
-pause=(ImageButton)findViewById(R.id.pause);
-        pause_layout = (RelativeLayout) findViewById(R.id.pause_layout);
+
         setContentView(R.layout.activity_maps);
+        play_layout = (LinearLayout) findViewById(R.id.play_layout);
+        pause = (ImageButton) findViewById(R.id.pause);
         timer = (EditText) findViewById(R.id.timer);
         distance_meters = (EditText) findViewById(R.id.distance_meters);
         current_speed = (EditText) findViewById(R.id.current_speed);
@@ -107,30 +108,13 @@ pause=(ImageButton)findViewById(R.id.pause);
         }
         times = new Timer();
 
-        times.schedule(timerTask=new TimerTask() {
+        times.schedule(timerTask = new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String sec = "";
-
-                        seconds++;
-
-                        if (seconds < 10) {
-                            sec = "0" + String.valueOf(seconds);
-                        } else if (seconds < 60) {
-
-                            sec = String.valueOf(seconds);
-
-                        } else if (seconds == 60) {
-                            minutes++;
-                            min = String.valueOf(minutes);
-                            seconds = 0;
-                        }
-                        //Toast.makeText(getApplicationContext(), "HERRRRRRRRRRRRRE", Toast.LENGTH_SHORT).show();
-                        timer.setText(min + ":" + sec);
-
+                        setInformation();
                     }
                 });
 
@@ -147,6 +131,28 @@ pause=(ImageButton)findViewById(R.id.pause);
         } else {
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    public void setInformation() {
+        String sec = "";
+
+        seconds++;
+        totalSecs++;
+        if (seconds < 10) {
+            sec = "0" + String.valueOf(seconds);
+        } else if (seconds < 60) {
+
+            sec = String.valueOf(seconds);
+
+        } else if (seconds == 60) {
+            minutes++;
+            min = String.valueOf(minutes);
+            seconds = 0;
+            sec = "00";
+        }
+        //Toast.makeText(getApplicationContext(), "HERRRRRRRRRRRRRE", Toast.LENGTH_SHORT).show();
+        timer.setText(min + ":" + sec);
 
     }
 
@@ -307,46 +313,52 @@ pause=(ImageButton)findViewById(R.id.pause);
                     }
                 },
                 Looper.myLooper());
+
     }
 
     public void onLocationChanged(Location location) {
         // GPS may be turned off
+
         if (location == null) {
             return;
         }
 
         // Report to the UI that the location was updated
+        if (measureLocation == true) {
+            String msg = "Updated Location: " +
+                    Double.toString(location.getLatitude()) + "," +
+                    Double.toString(location.getLongitude());
+            if (mCurrentLocation != null) {
+                //    double distance = GetDistanceFromLatLonInKm(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), location.getLatitude(), location.getLongitude());
+                //     Toast.makeText(this, "DISTANCE IS "+distance, Toast.LENGTH_LONG).show();
+                //String newDist= new DecimalFormat("#.##").format(distance);
 
-        String msg = "Updated Location: " +
-                Double.toString(location.getLatitude()) + "," +
-                Double.toString(location.getLongitude());
-        if (mCurrentLocation != null) {
-        //    double distance = GetDistanceFromLatLonInKm(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), location.getLatitude(), location.getLongitude());
-            //     Toast.makeText(this, "DISTANCE IS "+distance, Toast.LENGTH_LONG).show();
-            //String newDist= new DecimalFormat("#.##").format(distance);
 
+                //  double f1 = Double.valueOf(distance) + Float.valueOf(prevDist);
+                //  distance_meters.setText(String.valueOf(f1));
+                float dist = mCurrentLocation.distanceTo(location);
+                double val = dist + Double.valueOf(distance_meters.getText().toString());
+                distance_meters.setText(String.valueOf(new DecimalFormat("#.##").format(val)));
+            }
+            mCurrentLocation = location;
+            double distanceInM = Double.valueOf(distance_meters.getText().toString());
+            double currentSpeed = distanceInM / totalSecs;
+            current_speed.setText(String.valueOf(
+                    new DecimalFormat("#.#").format(currentSpeed)));
+            if (currentSpeed >= Double.valueOf(max_speed.getText().toString())) {
+                max_speed.setText(String.valueOf(new DecimalFormat("#.#").format(
+                        currentSpeed)));
 
-            String prevDist = distance_meters.getText().toString();
-          //  double f1 = Double.valueOf(distance) + Float.valueOf(prevDist);
-          //  distance_meters.setText(String.valueOf(f1));
-            float dist = mCurrentLocation.distanceTo(location);
-            double val = dist + Double.valueOf(max_speed.getText().toString());
-            distance_meters.setText(String.valueOf(val));
+            }
+
+            //  Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
+            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+            map.moveCamera(cameraUpdate);
+
+            //   Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+
         }
-        mCurrentLocation = location;
-        current_speed.setText(String.valueOf(mCurrentLocation.getSpeed()));
-        if(mCurrentLocation.getSpeed()>=Float.valueOf(max_speed.getText().toString())){
-            max_speed.setText(String.valueOf(mCurrentLocation.getSpeed()));
-
-        }
-
-        //  Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
-        LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-        map.moveCamera(cameraUpdate);
-
-        //   Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-
     }
 
     /*public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
@@ -393,23 +405,58 @@ pause=(ImageButton)findViewById(R.id.pause);
 
     public void pauseBtnClicked(View view) {
         pause.setVisibility(View.GONE);
-     pause_layout.setVisibility(View.GONE);
-
+        play_layout.setVisibility(View.VISIBLE);
+        // pause_layout.setVisibility(View.GONE);
+        measureLocation = false;
 //       play_layout.setVisibility(View.VISIBLE);
-
-    //    times.cancel();
+        mCurrentLocation = null;
+        times.cancel();
     }
 
+    @Override
+    protected void onDestroy() {
+        times.cancel();
 
+        super.onDestroy();
+
+    }
 
     public void playBtnClicked(View view) {
 
-        play_layout.setVisibility(View.GONE)
-        ;
- //       pause_layout.setVisibility(View.VISIBLE);
+        pause.setVisibility(View.VISIBLE);
+        play_layout.setVisibility(View.GONE);
+        measureLocation = true;
+        times = new Timer();
 
-        times.schedule(timerTask,0,1000);
+        times.schedule(timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setInformation();
+                    }
+                });
+
+            }
+        }, 0, 1000);
+
+
     }
+
+    public void stopBtnClicked(View view) {
+        Intent in = new Intent(MapsActivity.this, SummaryActivity.class);
+        in.putExtra("TIME", timer.getText().toString());
+        in.putExtra("MAX", max_speed.getText().toString());
+        in.putExtra("DISTANCE", distance_meters.getText().toString());
+
+        startActivity(in);
+        times.cancel();
+        this.finish();
+
+
+    }
+
     // Define a DialogFragment that displays the error dialog
     public static class ErrorDialogFragment extends android.support.v4.app.DialogFragment {
 
