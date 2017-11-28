@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -42,21 +43,26 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
+
 @RuntimePermissions
 
 public class MapsActivity extends AppCompatActivity {
-    private LinearLayout layoutLocation,layoutStats;
+    private LinearLayout layoutLocation, layoutStats;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
     Location mCurrentLocation;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
-    private long FASTEST_INTERVAL = 5000; /* 5 secs */
-
+    private long FASTEST_INTERVAL = 500; /* 1 secs */
+    double prevLat = 0, prevLong = 0;
+    EditText distance_meters, current_speed, max_speed;
     private final static String KEY_LOCATION = "location";
 
     /*
@@ -69,10 +75,12 @@ public class MapsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-      setContentView(R.layout.activity_maps);
-
-layoutLocation=(LinearLayout)findViewById(R.id.layout_location);
-        layoutStats=(LinearLayout)findViewById(R.id.layout_stats);
+        setContentView(R.layout.activity_maps);
+        distance_meters = (EditText) findViewById(R.id.distance_meters);
+        current_speed = (EditText) findViewById(R.id.current_speed);
+        max_speed = (EditText) findViewById(R.id.max_speed);
+        layoutLocation = (LinearLayout) findViewById(R.id.layout_location);
+        layoutStats = (LinearLayout) findViewById(R.id.layout_stats);
 
         if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
             // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
@@ -83,7 +91,7 @@ layoutLocation=(LinearLayout)findViewById(R.id.layout_location);
         }
 
 
-         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_Fragment);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_Fragment);
         if (mapFragment != null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
@@ -264,15 +272,49 @@ layoutLocation=(LinearLayout)findViewById(R.id.layout_location);
 
         // Report to the UI that the location was updated
 
-        mCurrentLocation = location;
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-      //  Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
+        if (mCurrentLocation != null) {
+            double distance = GetDistanceFromLatLonInKm(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), location.getLatitude(), location.getLongitude());
+            //     Toast.makeText(this, "DISTANCE IS "+distance, Toast.LENGTH_LONG).show();
+            //String newDist= new DecimalFormat("#.##").format(distance);
+
+
+            String prevDist = distance_meters.getText().toString();
+            double f1 = Double.valueOf(distance) + Float.valueOf(prevDist);
+            distance_meters.setText(String.valueOf(f1));
+            float dist = mCurrentLocation.distanceTo(location);
+            double val = dist + Double.valueOf(max_speed.getText().toString());
+            max_speed.setText(String.valueOf(val));
+        }
+        mCurrentLocation = location;
+        current_speed.setText(String.valueOf(mCurrentLocation.getSpeed()));
+
+        //  Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
         LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
         map.moveCamera(cameraUpdate);
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+
+        //   Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+
+    }
+
+    public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371;
+        // Radius of the earth in km
+        double dLat = deg2rad(lat2 - lat1);
+        // deg2rad below
+        double dLon = deg2rad(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = R * c;
+        // Distance in km
+        return d * 1000;
+    }
+
+    private double deg2rad(double deg) {
+        return deg * (Math.PI / 180);
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -282,7 +324,7 @@ layoutLocation=(LinearLayout)findViewById(R.id.layout_location);
 
     public void locationBtnClicked(View view) {
 
-    layoutStats.setVisibility(View.GONE);
+        layoutStats.setVisibility(View.GONE);
         layoutLocation.setVisibility(View.VISIBLE);
 
     }

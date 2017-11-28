@@ -55,9 +55,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CountDownActivity extends AppCompatActivity {
     TextToSpeech tts;
-LoadingView mLoadingView;
-TextView textView;
-LinearLayout ll;
+    LoadingView mLoadingView;
+    TextView textView;
+    LinearLayout ll;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -77,41 +78,46 @@ LinearLayout ll;
         });
 
         setContentView(R.layout.activity_count_down);
-ll=(LinearLayout)findViewById(R.id.ll);
+        ll = (LinearLayout) findViewById(R.id.ll);
         mLoadingView = (LoadingView) findViewById(R.id.loading_view);
-        mLoadingView.addAnimation(Color.RED,R.drawable.marks,LoadingView.FROM_LEFT);
-        mLoadingView.addAnimation(Color.RED,R.drawable.set,LoadingView.FROM_BOTTOM);
-        mLoadingView.addAnimation(Color.WHITE,R.drawable.go,LoadingView.FROM_RIGHT);
-        mLoadingView.addAnimation(Color.RED,R.drawable.marks,LoadingView.FROM_LEFT);
+        mLoadingView.addAnimation(Color.RED, R.drawable.marks, LoadingView.FROM_LEFT);
+        mLoadingView.addAnimation(Color.RED, R.drawable.set, LoadingView.FROM_BOTTOM);
+        mLoadingView.addAnimation(Color.WHITE, R.drawable.go, LoadingView.FROM_RIGHT);
+        mLoadingView.addAnimation(Color.RED, R.drawable.marks, LoadingView.FROM_LEFT);
 
-        textView=(TextView)findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
 
         //also you can add listener for getting callback (optional)
         mLoadingView.addListener(new LoadingView.LoadingListener() {
-            @Override public void onAnimationStart(int currentItemPosition) {
-if(currentItemPosition==1){
-                    textView.setText("ON YOUR MARKS");}
-                if(currentItemPosition==2){
+            @Override
+            public void onAnimationStart(int currentItemPosition) {
+                if (currentItemPosition == 1) {
+                    textView.setText("ON YOUR MARKS");
+                }
+                if (currentItemPosition == 2) {
                     textView.setText("Set");
                     ll.setBackgroundColor(Color.parseColor("#802392"));
 
-}
-                if(currentItemPosition==3){
+                }
+                if (currentItemPosition == 3) {
                     textView.setText("Go");
 
 
                     ll.setBackgroundColor(Color.parseColor("#F58F29"));
-
+                    Intent i = new Intent(CountDownActivity.this, MapsActivity.class);
+                    startActivity(i);
 
                 }
 
             }
 
-            @Override public void onAnimationRepeat(int nextItemPosition) {
+            @Override
+            public void onAnimationRepeat(int nextItemPosition) {
             }
 
-            @Override public void onAnimationEnd(int nextItemPosition) {
-       //         finish();
+            @Override
+            public void onAnimationEnd(int nextItemPosition) {
+                //         finish();
             }
         });
 

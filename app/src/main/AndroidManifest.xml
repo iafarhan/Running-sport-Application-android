@@ -39,7 +39,6 @@
         <activity android:name="views.TourActivity" />
         <activity android:name="views.SignInActivity" />
         <activity android:name="views.MapsActivity">
-
         </activity>
 
         <uses-library
@@ -54,14 +53,15 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name="views.HomeActivity">
-
-        </activity>
-        <activity android:name="views.CountDownActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
+
+        </activity>
+        <activity android:name="views.CountDownActivity">
+           </activity>
     </application>
 
 </manifest>

@@ -26,7 +26,6 @@ LinearLayout linear_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_home);
                 NavigationFragment navigationFragment=new NavigationFragment();
@@ -44,7 +43,7 @@ LinearLayout linear_layout;
     public void startBtnClicked(View view){
 
 
-        Intent intent=new Intent(this, MapsActivity.class);
+        Intent intent=new Intent(this, CountDownActivity.class);
         startActivity(intent);
 
     }
