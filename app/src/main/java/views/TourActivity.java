@@ -2,6 +2,7 @@ package views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -28,9 +29,24 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class TourActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener ,View.OnClickListener{
     TourPagerAdapter mCustomPagerAdapter;
     ViewPager mViewPager;
+    private Handler handler;
+    private int page = 0;
+
+    private int delay = 1000; //milliseconds
     SignInButton signInButton;
     GoogleApiClient googleApiClient;
     static final int REQ_CODE = 9001;
+    Runnable runnable = new Runnable() {
+        public void run() {
+            if (mCustomPagerAdapter.getCount() == page) {
+                page = 0;
+            } else {
+                page++;
+            }
+            mViewPager.setCurrentItem(page, true);
+            handler.postDelayed(this, delay);
+        }
+    };
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -43,6 +59,7 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.activity_tour);
 
         mCustomPagerAdapter = new TourPagerAdapter(this);
+        handler = new Handler();
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mCustomPagerAdapter);
@@ -54,7 +71,17 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable, delay);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
