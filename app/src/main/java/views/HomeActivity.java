@@ -86,6 +86,7 @@ ContentResolver resolver;
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
                         dialog.cancel();
+                        finish();
                     }
                 });
         final AlertDialog alert = builder.create();

@@ -73,7 +73,7 @@ TimerTask timerTask;
     Location mCurrentLocation;
     ImageButton pause;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
-    private long FASTEST_INTERVAL = 500; /* 1 secs */
+    private long FASTEST_INTERVAL = 1000; /* 1 secs */
     double prevLat = 0, prevLong = 0;
     EditText distance_meters, current_speed, max_speed, timer;
     private final static String KEY_LOCATION = "location";

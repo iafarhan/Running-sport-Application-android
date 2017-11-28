@@ -32,6 +32,7 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
     ViewPager mViewPager;
     private Handler handler;
     private int page = 0;
+    String restoredText;
 
     private int delay = 1000; //milliseconds
     SignInButton signInButton;
@@ -62,13 +63,14 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).
                 addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
         SharedPreferences prefs = getSharedPreferences("myPref", MODE_PRIVATE);
-        String restoredText = prefs.getString("loggedin", null);
+        restoredText = prefs.getString("loggedin", null);
 
 
         if (restoredText != null) {
             // signed in. Show the "sign out" button and explanation.
             // ...
-            setContentView(R.layout.activity_count_down);
+           Intent i=new Intent(this,HomeActivity.class);
+           startActivity(i);
 
         } else {
             // not signed in. Show the "sign in" button and explanation.
@@ -92,13 +94,17 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onResume() {
         super.onResume();
-    //    handler.postDelayed(runnable, delay);
+        if (restoredText == null) {
+
+                handler.postDelayed(runnable, delay);}
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-      //  handler.removeCallbacks(runnable);
+        if (restoredText == null) {
+
+            handler.removeCallbacks(runnable);}
     }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -147,7 +153,6 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
     public void signIn() {
-        Toast.makeText(getApplicationContext(),"CLICKED",Toast.LENGTH_SHORT).show();
     Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(intent, REQ_CODE);
 
