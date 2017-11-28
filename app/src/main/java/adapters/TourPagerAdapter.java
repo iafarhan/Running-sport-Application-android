@@ -17,7 +17,7 @@ import com.asocs.sprintmaster.R;
 
 public class TourPagerAdapter extends PagerAdapter {
 
-    int[] mResources = {R.drawable.tour_sprint,R.drawable.tour_workout,R.drawable.tour_diet};
+    int[] mResources = {R.drawable.ronaldo1,R.drawable.ronaldo2,R.drawable.hazard};
     String[] mDescription={"sprint monitoring","workout plans","diet plans"};
 //
     Context mContext;
@@ -45,8 +45,6 @@ public class TourPagerAdapter extends PagerAdapter {
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
         imageView.setImageResource(mResources[position]);
-        TextView textView=(TextView) itemView.findViewById(R.id.description_view);
-        textView.setText(mDescription[position]);
         container.addView(itemView);
 
         return itemView;

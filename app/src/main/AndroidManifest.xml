@@ -36,7 +36,13 @@
         android:theme="@style/AppTheme">
         <activity android:name="views.StartActivity" />
         <activity android:name="views.SprintMonitoringActivity" />
-        <activity android:name="views.TourActivity" />
+        <activity android:name="views.TourActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name="views.SignInActivity" />
         <activity android:name="views.MapsActivity"></activity>
 
@@ -62,12 +68,8 @@
             android:enabled="true"
             android:exported="true"></provider>
 
-        <activity android:name=".SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name="views.SplashActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

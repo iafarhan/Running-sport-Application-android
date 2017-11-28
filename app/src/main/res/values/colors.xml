@@ -3,8 +3,9 @@
     <color name="colorPrimary">#000</color>
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="title">#fff</color>
 
-
+    <color name="splash1">#391463</color>
 
 
 </resources>
