@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -19,7 +20,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.asocs.sprintmaster.R;
@@ -45,6 +48,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -54,15 +59,23 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 @RuntimePermissions
 
 public class MapsActivity extends AppCompatActivity {
+    int minutes = 0;
+    String min = "00";
+    RelativeLayout pause_layout;
+    LinearLayout play_layout;
+TimerTask timerTask;
+    Timer times;
+    int seconds = 0;
     private LinearLayout layoutLocation, layoutStats;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
     Location mCurrentLocation;
+    ImageButton pause;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 500; /* 1 secs */
     double prevLat = 0, prevLong = 0;
-    EditText distance_meters, current_speed, max_speed;
+    EditText distance_meters, current_speed, max_speed, timer;
     private final static String KEY_LOCATION = "location";
 
     /*
@@ -74,8 +87,11 @@ public class MapsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        play_layout = (LinearLayout) findViewById(R.id.play_layout);
+pause=(ImageButton)findViewById(R.id.pause);
+        pause_layout = (RelativeLayout) findViewById(R.id.pause_layout);
         setContentView(R.layout.activity_maps);
+        timer = (EditText) findViewById(R.id.timer);
         distance_meters = (EditText) findViewById(R.id.distance_meters);
         current_speed = (EditText) findViewById(R.id.current_speed);
         max_speed = (EditText) findViewById(R.id.max_speed);
@@ -89,8 +105,37 @@ public class MapsActivity extends AppCompatActivity {
 
 
         }
+        times = new Timer();
 
+        times.schedule(timerTask=new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String sec = "";
 
+                        seconds++;
+
+                        if (seconds < 10) {
+                            sec = "0" + String.valueOf(seconds);
+                        } else if (seconds < 60) {
+
+                            sec = String.valueOf(seconds);
+
+                        } else if (seconds == 60) {
+                            minutes++;
+                            min = String.valueOf(minutes);
+                            seconds = 0;
+                        }
+                        //Toast.makeText(getApplicationContext(), "HERRRRRRRRRRRRRE", Toast.LENGTH_SHORT).show();
+                        timer.setText(min + ":" + sec);
+
+                    }
+                });
+
+            }
+        }, 0, 1000);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_Fragment);
         if (mapFragment != null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -342,6 +387,25 @@ public class MapsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void pauseBtnClicked(View view) {
+        pause.setVisibility(View.GONE);
+     pause_layout.setVisibility(View.GONE);
+
+//       play_layout.setVisibility(View.VISIBLE);
+
+    //    times.cancel();
+    }
+
+
+
+    public void playBtnClicked(View view) {
+
+        play_layout.setVisibility(View.GONE)
+        ;
+ //       pause_layout.setVisibility(View.VISIBLE);
+
+        times.schedule(timerTask,0,1000);
+    }
     // Define a DialogFragment that displays the error dialog
     public static class ErrorDialogFragment extends android.support.v4.app.DialogFragment {
 
