@@ -7,18 +7,20 @@ package datamodel;
 public class Athlete {
 
     int id;
-    String averageSpeed;
-    String maximumSpeed;
-    String distanceTravelled;
-    String timeTakenTOCompleteRace;
+    public  String averageSpeed;
+    public  String maximumSpeed;
+    public  String totaltimeTaken;
+    public  String totaldistanceTravelled;
+    public  String totalrun;
 
     public Athlete(int i, String string, String cursorString){   }
-    public Athlete(int id, String avgSpeed, String maxSpeed,String distTravel,String timeTaken){
+    public Athlete(int id, String avgSpeed, String maxSpeed,String timeTaken,String totaldistTravel,String totalrun){
         this.id = id;
         this.averageSpeed = avgSpeed;
         this.maximumSpeed = maxSpeed;
-        this.distanceTravelled = distTravel;
-        this.timeTakenTOCompleteRace = timeTaken;
+        this.totaldistanceTravelled = totaldistTravel;
+        this.totaltimeTaken = timeTaken;
+        this.totalrun=totalrun;
     }
 
     public String getMaximumSpeed() {
@@ -30,19 +32,19 @@ public class Athlete {
     }
 
     public String getDistanceTravelled() {
-        return distanceTravelled;
+        return totaldistanceTravelled;
     }
 
     public void setDistanceTravelled(String distanceTravelled) {
-        this.distanceTravelled = distanceTravelled;
+        this.totaldistanceTravelled = distanceTravelled;
     }
 
     public String getTimeTakenTOCompleteRace() {
-        return timeTakenTOCompleteRace;
+        return totaltimeTaken;
     }
 
     public void setTimeTakenTOCompleteRace(String timeTakenTOCompleteRace) {
-        this.timeTakenTOCompleteRace = timeTakenTOCompleteRace;
+        this.totaltimeTaken = timeTakenTOCompleteRace;
     }
 
     public int getID(){

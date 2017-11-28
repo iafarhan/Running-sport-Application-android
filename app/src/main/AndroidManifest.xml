@@ -38,14 +38,7 @@
         <activity android:name="views.SprintMonitoringActivity" />
         <activity android:name="views.TourActivity" />
         <activity android:name="views.SignInActivity" />
-        <activity android:name="views.MapsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+        <activity android:name="views.MapsActivity"></activity>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -61,8 +54,21 @@
         <activity android:name="views.HomeActivity">
 
         </activity>
-        <activity android:name="views.CountDownActivity">
-           </activity>
+        <activity android:name="views.CountDownActivity"></activity>
+
+        <provider
+            android:name="datamodel.Contentprovider"
+            android:authorities="datamodel.Contentprovider"
+            android:enabled="true"
+            android:exported="true"></provider>
+
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
