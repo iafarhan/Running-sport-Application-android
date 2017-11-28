@@ -2,6 +2,7 @@ package views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -56,31 +57,48 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tour);
 
-        mCustomPagerAdapter = new TourPagerAdapter(this);
-        handler = new Handler();
-
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mCustomPagerAdapter);
-       signInButton = (SignInButton) findViewById(R.id.sign_in);
-        signInButton.setOnClickListener(this);
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).
                 addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
+        SharedPreferences prefs = getSharedPreferences("myPref", MODE_PRIVATE);
+        String restoredText = prefs.getString("loggedin", null);
 
+
+        if (restoredText != null) {
+            // signed in. Show the "sign out" button and explanation.
+            // ...
+            setContentView(R.layout.activity_count_down);
+
+        } else {
+            // not signed in. Show the "sign in" button and explanation.
+            // ...
+            setContentView(R.layout.activity_tour);
+
+            mCustomPagerAdapter = new TourPagerAdapter(this);
+            handler = new Handler();
+
+            mViewPager = (ViewPager) findViewById(R.id.pager);
+            mViewPager.setAdapter(mCustomPagerAdapter);
+            signInButton = (SignInButton) findViewById(R.id.sign_in);
+            signInButton.setOnClickListener(this);
+
+            SharedPreferences.Editor editor = getSharedPreferences("myPref", MODE_PRIVATE).edit();
+            editor.putString("loggedin", "true");
+            editor.apply();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(runnable, delay);
+    //    handler.postDelayed(runnable, delay);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        handler.removeCallbacks(runnable);
+      //  handler.removeCallbacks(runnable);
     }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
