@@ -30,20 +30,18 @@
     <application
         android:name="application.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/img_running"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="views.StartActivity" />
         <activity android:name="views.SprintMonitoringActivity" />
-        <activity android:name="views.TourActivity"></activity>
+        <activity android:name="views.TourActivity">
+
+        </activity>
         <activity android:name="views.SignInActivity" />
         <activity android:name="views.MapsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <uses-library
@@ -57,17 +55,32 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="views.HomeActivity"></activity>
-        <activity android:name="views.CountDownActivity" />
+        <activity android:name="views.HomeActivity">
+
+
+        </activity>
+        <activity android:name="views.CountDownActivity" >
+
+
+        </activity>
 
         <provider
-            android:name="datamodel.Contentprovider"
-            android:authorities="datamodel.Contentprovider"
+            android:name=".CustomContentProvider"
+            android:authorities="com.asocs.sprintmaster.CustomContentProvider"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name="views.SplashActivity"></activity>
-        <activity android:name="views.SummaryActivity"></activity>
+        <activity android:name="views.SplashActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="views.SummaryActivity">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,36 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="views.SignInActivity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="25dp">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:src="@drawable/iph"
+        android:alpha="0.6"
+        android:scaleType="fitXY"/>
 
-    <LinearLayout
-        android:id="@+id/Prof_Selection"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1">
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="views.SignInActivity">
+
 
         <ImageView
             android:id="@+id/profile_pic"
-            android:layout_width="120dp"
-            android:layout_height="98dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="85dp"
+            android:layout_width="185dp"
+            android:layout_height="161dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="124dp"
+            android:layout_marginTop="108dp"
             android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintLeft_creator="1"
@@ -40,13 +35,16 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="38dp"
-            android:layout_marginTop="85dp"
+            android:layout_marginRight="132dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
             android:text="User NAME HERE"
-            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic"
             tools:layout_constraintRight_creator="1"
             tools:layout_constraintTop_creator="1" />
 
@@ -54,25 +52,30 @@
             android:id="@+id/email_adress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="28dp"
             android:text="User email address"
-            app:layout_constraintLeft_toLeftOf="@+id/user_name"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_name"
             tools:layout_constraintLeft_creator="1" />
 
         <Button
-            android:id="@+id/logout_btn"
-            android:layout_width="wrap_content"
+            android:id="@+id/nxt_btn"
+            android:layout_width="88dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="11dp"
-            android:layout_marginTop="20dp"
-            android:text="LogOut"
-            app:layout_constraintRight_toRightOf="@+id/email_adress"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="52dp"
+            android:text="next"
+            android:onClick="nxtClicked"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email_adress"
             tools:layout_constraintRight_creator="1" />
 
-    </LinearLayout>
 
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

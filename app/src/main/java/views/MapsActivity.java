@@ -4,6 +4,9 @@ package views;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -14,6 +17,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -54,6 +58,7 @@ import java.util.TimerTask;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
+import static android.view.View.Y;
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 @RuntimePermissions
@@ -62,6 +67,8 @@ public class MapsActivity extends AppCompatActivity {
     int minutes = 0;
     int totalSecs = 0;
     String min = "00";
+    int i=0;
+
     boolean measureLocation = true;
     LinearLayout play_layout;
     TimerTask timerTask;
@@ -129,7 +136,7 @@ public class MapsActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+     //       Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -151,7 +158,6 @@ public class MapsActivity extends AppCompatActivity {
             seconds = 0;
             sec = "00";
         }
-        //Toast.makeText(getApplicationContext(), "HERRRRRRRRRRRRRE", Toast.LENGTH_SHORT).show();
         timer.setText(min + ":" + sec);
 
     }
@@ -174,7 +180,7 @@ public class MapsActivity extends AppCompatActivity {
 
         if (map != null) {
             // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+   //         Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
             MapsActivityPermissionsDispatcher.getMyLocationWithPermissionCheck(this);
             MapsActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
         } else {
@@ -211,7 +217,12 @@ public class MapsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            onLocationChanged(location);
+                            try {
+                                if(location!=mCurrentLocation)
+                                onLocationChanged(location);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 })
@@ -237,6 +248,11 @@ public class MapsActivity extends AppCompatActivity {
 	 */
     @Override
     protected void onStop() {
+
+        NotificationManager mNotificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(111);
+
         super.onStop();
     }
 
@@ -265,10 +281,23 @@ public class MapsActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
 
+                        .setSmallIcon(R.drawable.img_running)
+
+                        .setContentTitle("Sprint Master")
+.setOngoing(true)
+
+                        .setContentText("Tracking your Activity");
+        final Intent emptyIntent = new Intent();
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 111, emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(111, mBuilder.build());
         // Display the connection status
 
         if (mCurrentLocation != null) {
@@ -277,7 +306,7 @@ public class MapsActivity extends AppCompatActivity {
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.animateCamera(cameraUpdate);
         } else {
-            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
         }
         MapsActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
     }
@@ -309,14 +338,18 @@ public class MapsActivity extends AppCompatActivity {
         getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, new LocationCallback() {
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
-                        onLocationChanged(locationResult.getLastLocation());
+                        try {
+                            onLocationChanged(locationResult.getLastLocation());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 Looper.myLooper());
 
     }
 
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location) throws InterruptedException {
         // GPS may be turned off
 
         if (location == null) {
@@ -325,9 +358,8 @@ public class MapsActivity extends AppCompatActivity {
 
         // Report to the UI that the location was updated
         if (measureLocation == true) {
-            String msg = "Updated Location: " +
-                    Double.toString(location.getLatitude()) + "," +
-                    Double.toString(location.getLongitude());
+
+
             if (mCurrentLocation != null) {
                 //    double distance = GetDistanceFromLatLonInKm(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), location.getLatitude(), location.getLongitude());
                 //     Toast.makeText(this, "DISTANCE IS "+distance, Toast.LENGTH_LONG).show();
@@ -338,27 +370,25 @@ public class MapsActivity extends AppCompatActivity {
                 //  distance_meters.setText(String.valueOf(f1));
                 float dist = mCurrentLocation.distanceTo(location);
                 double val = dist + Double.valueOf(distance_meters.getText().toString());
-                distance_meters.setText(String.valueOf(new DecimalFormat("#.##").format(val)));
+                distance_meters.setText(String.valueOf(new DecimalFormat("#.#").format(val)));
+
+
+
             }
             mCurrentLocation = location;
-            double distanceInM = Double.valueOf(distance_meters.getText().toString());
-            double currentSpeed = distanceInM / totalSecs;
-            current_speed.setText(String.valueOf(
-                    new DecimalFormat("#.#").format(currentSpeed)));
-            if (currentSpeed >= Double.valueOf(max_speed.getText().toString())) {
-                max_speed.setText(String.valueOf(new DecimalFormat("#.#").format(
-                        currentSpeed)));
+            current_speed.setText(String.valueOf(new DecimalFormat("#.#").format(
+                    location.getSpeed()*3.6)));
+            double currVal=Double.valueOf(String.valueOf(current_speed.getText()));
+            if ( currVal>= Double.valueOf(max_speed.getText().toString())) {
+                max_speed.setText(String.valueOf(currVal));
 
             }
 
-            //  Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
-            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude() );
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.moveCamera(cameraUpdate);
 
-            //   Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-
-        }
+                }
     }
 
     /*public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
@@ -416,7 +446,6 @@ public class MapsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         times.cancel();
-
         super.onDestroy();
 
     }

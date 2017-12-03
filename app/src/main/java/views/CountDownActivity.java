@@ -64,6 +64,7 @@ public class CountDownActivity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,15 +92,22 @@ public class CountDownActivity extends AppCompatActivity {
         mLoadingView.addListener(new LoadingView.LoadingListener() {
             @Override
             public void onAnimationStart(int currentItemPosition) {
+
                 if (currentItemPosition == 1) {
+
                     textView.setText("ON YOUR MARKS");
+
                 }
                 if (currentItemPosition == 2) {
+
                     textView.setText("Set");
                     ll.setBackgroundColor(Color.parseColor("#802392"));
+                    tts.speak("GET SET", TextToSpeech.QUEUE_ADD, null);
 
                 }
                 if (currentItemPosition == 3) {
+                    tts.speak("GO", TextToSpeech.QUEUE_ADD, null);
+
                     textView.setText("Go");
 
 
@@ -133,5 +141,10 @@ public class CountDownActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop() {
 
+       tts.stop();
+        super.onStop();
+    }
 }

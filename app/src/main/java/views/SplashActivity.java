@@ -1,6 +1,7 @@
 package views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,8 +67,8 @@ public class SplashActivity   extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
+Intent i=new Intent(SplashActivity.this,TourActivity.class);
 
-
-
+startActivity(i);
     }
 }

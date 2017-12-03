@@ -56,6 +56,12 @@ public class SignInActivity extends AppCompatActivity {
             profPic.setImageResource(R.drawable.user_default);
     }
 
+public void nxtClicked(View view){
 
+
+        Intent i=new Intent(SignInActivity.this,HomeActivity.class);
+        startActivity(i);
+
+}
 }
 

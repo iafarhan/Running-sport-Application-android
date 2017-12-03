@@ -9,45 +9,42 @@ import android.provider.BaseColumns;
 
 public class Contract {
     public static final int DATABASE_VERSION=2;
-    public static final String DATABASE_NAME = "sprintMonitor";
-  public static final String CONTENT_AUTHORITY="datamodel.Contentprovider";
+    public static final String DATABASE_NAME = "sprintMaster";
+  public static final String CONTENT_AUTHORITY="com.asocs.sprintmaster.datamodel.Contentprovider";
     public static final Uri BASE_CONTENT_URI=Uri.parse("content://"+CONTENT_AUTHORITY);
-    public static final String PATH_BIO = "USER_BIO";
-    public static final String PATH_GRAPH = "USER_GRAPH";
+    public static final String PATH_USER = "user";
+    public static final String PATH_STATS = "stats";
 
     private Contract(){}
-    public static abstract class table1 implements BaseColumns {
-        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_BIO).build();
-        public static final String TABLE_BIO = "USER_BIO";
-        public static final String KEY_AvgSpeed = "avg_speed";
-        public static final String KEY_MaxSpeed = "max_speed";
-        public static final String KEY_TOTAL_DISTANCE_TRAVELLED = "total_distance_travelled";
-        public static final String KEY_TOTAL_TIME_TAKEN = "time_taken";
-        public static final String TOTAL_RUN = "total_run";
+    public static abstract class User implements BaseColumns {
+        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
+        public static final String TABLE_USER = "user";
+        public static final String COL_NAME="name";
+        public static final String COL_EMAIL="email";
+        public static final String COL_PHOTO="photo";
 
-        public static final String CREATE_BIO_TABLE = "CREATE TABLE "+TABLE_BIO+"(" +
-                _ID + " INTEGER PRIMARY KEY,"+KEY_AvgSpeed + " TEXT,"
-                + KEY_MaxSpeed + " TEXT," + KEY_TOTAL_DISTANCE_TRAVELLED + " TEXT,"
-                + KEY_TOTAL_TIME_TAKEN + " TEXT,"+TOTAL_RUN + " TEXT"+")";
+public static final String CREATE_USER_TABLE = "CREATE TABLE "+TABLE_USER+"(" +
+                _ID + " INTEGER primary key,"
+                + COL_NAME + " TEXT," + COL_EMAIL + " TEXT,"
+                + COL_PHOTO + " TEXT);";
 
-        public static final String DELETE_BIO_TABLE="DROP TABLE IF EXISTS "+ TABLE_BIO;
+        public static final String DELETE_USER_TABLE="DROP TABLE IF EXISTS "+ TABLE_USER;
 
     }
 
-    public static abstract class table2 implements BaseColumns {
-        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_GRAPH).build();
+    public static abstract class Stats implements BaseColumns {
+        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_STATS).build();
 
-        public static final String TABLE_GRAPH = "USER_GRAPH";
-        public static final String USER_RUN = "user_run";
-        public static final String KEY_SPEED = "speed";
-        public static final String KEY_TIME = "time";
-        public static final String KEY_DISTANCE = "distance";
+        public static final String TABLE_STATS = "USER_GRAPH";
+        public static final String COL_MAX = "max_speed";
+        public static final String COL_RUNS = "runs";
+        public static final String COL_TIME = "time_taken";
+        public static final String COL_DISTANCE = "time_taken";
 
-
-        public static final String CREATE_GRAPH_TABLE = "CREATE TABLE "+TABLE_GRAPH+"(" +
-                _ID + " INTEGER PRIMARY KEY,"+USER_RUN+ " TEXT,"+KEY_SPEED + " TEXT,"
-                + KEY_TIME + " TEXT," + KEY_DISTANCE + " TEXT"+")";
-        public static final String DELETE_GRAPH_TABLE="DROP TABLE IF EXISTS "+ TABLE_GRAPH;
+        public static final String CREATE_STATS_TABLE = "CREATE TABLE "+TABLE_STATS+"(" +
+                _ID + " INTEGER PRIMARY KEY,"+COL_MAX+ " TEXT,"+COL_RUNS + " INTEGER,"
+                + COL_TIME + " TEXT," + COL_DISTANCE + " TEXT"+")";
+        public static final String DELETE_STATS_TABLE="DROP TABLE IF EXISTS "+ TABLE_STATS;
 
     }
 

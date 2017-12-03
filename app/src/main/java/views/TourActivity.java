@@ -85,9 +85,7 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
             signInButton = (SignInButton) findViewById(R.id.sign_in);
             signInButton.setOnClickListener(this);
 
-            SharedPreferences.Editor editor = getSharedPreferences("myPref", MODE_PRIVATE).edit();
-            editor.putString("loggedin", "true");
-            editor.apply();
+
         }
     }
 
@@ -133,6 +131,9 @@ public class TourActivity extends AppCompatActivity implements GoogleApiClient.O
             bundle.putString("EMAIL", email);
             bundle.putString("IMAGE_URL", imageUrl);
 
+            SharedPreferences.Editor editor = getSharedPreferences("myPref", MODE_PRIVATE).edit();
+            editor.putString("loggedin", "true");
+            editor.apply();
             Intent intent = new Intent(this, SignInActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);

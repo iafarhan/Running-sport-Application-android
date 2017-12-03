@@ -7,14 +7,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    android:textColor="#000">
+    android:textColor="#000">/
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.7"
         android:scaleType="fitXY"
-        android:src="@drawable/ronaldo" />
+        android:src="@drawable/iph" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -151,12 +151,13 @@
                 <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
-                    android:layout_height="19dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Current  Speed mph"
+                    android:text="Current Speed(km/h)"
                     android:textColor="#24f72d"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="@+id/current_speed"
                     app:layout_constraintStart_toStartOf="@+id/current_speed"
                     app:layout_constraintTop_toBottomOf="@+id/current_speed" />
@@ -164,11 +165,12 @@
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
-                    android:layout_height="19dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:text="Max Speed mph"
+                    android:text="Max Speed(km/h)"
                     android:textColor="#24f72d"
+                    android:textSize="18sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
                     app:layout_constraintEnd_toEndOf="@+id/max_speed"
                     app:layout_constraintStart_toStartOf="@+id/max_speed" />
@@ -198,6 +200,7 @@
                     android:layout_height="wrap_content"
                     android:text="Min : Sec"
                     android:textColor="#24f72d"
+                    android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/timer" />
@@ -207,68 +210,38 @@
                     android:layout_width="138dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginTop="8dp"
                     android:backgroundTint="#fff"
                     android:editable="false"
-                    android:ems="10"
 
+                    android:ems="10"
                     android:text="0"
                     android:textAlignment="center"
                     android:textColor="#fff"
                     android:textSize="32sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/editText"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView15"
-                    app:layout_constraintVertical_bias="0.671" />
+                    app:layout_constraintVertical_bias="0.809" />
 
                 <TextView
                     android:id="@+id/textView17"
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:text="Distance(m)"
+                    android:text="Distance(meters)"
                     android:textColor="#24f72d"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/distance_meters"
                     app:layout_constraintHorizontal_bias="0.545"
                     app:layout_constraintStart_toStartOf="@+id/distance_meters"
                     app:layout_constraintTop_toBottomOf="@+id/distance_meters"
                     app:layout_constraintVertical_bias="0.153" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Calories"
-                    android:textColor="#24f72d"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/editText"
-                    app:layout_constraintStart_toStartOf="@+id/editText"
-                    app:layout_constraintTop_toBottomOf="@+id/editText"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <EditText
-                    android:id="@+id/editText"
-                    android:layout_width="138dp"
-                    android:layout_height="62dp"
-                    android:layout_marginEnd="8dp"
-                    android:ems="10"
-                    android:inputType="none|textPersonName"
-                    android:text="0"
-                    android:textAlignment="center"
-                    android:textSize="32sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/distance_meters"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/distance_meters" />
 
 
             </android.support.constraint.ConstraintLayout>
